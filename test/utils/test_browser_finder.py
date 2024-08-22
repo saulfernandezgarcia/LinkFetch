@@ -1,22 +1,11 @@
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
-from src.browser_finder import BrowserFinder
+from src.utils.browser_finder import BrowserFinder
 
 class TestBrowserFinder(TestCase):
-
-    # setUp executes before every test case
-    def setUp(self):
-        self.bw = BrowserFinder("chrome.exe")
-
-    def test_init_when_browser_is_none(self):
-        with self.assertRaises(ValueError):
-            BrowserFinder(None)
-
-    def test_choose_browser(self):
-        self.bw.choose_browser("chrome.exe")
-        self.assertEqual(self.bw.desired_browser, "chrome.exe")
-    @patch("src.browser_finder.psutil.process_iter")
+    
+    @patch("src.utils.browser_finder.psutil.process_iter")
     def test_is_browser_active_when_process_exists(self, mock_process_iter):
         mock_process = MagicMock()
         mock_process.info = {"name" : "chrome.exe"}
@@ -31,28 +20,30 @@ class TestBrowserFinder(TestCase):
         mock_process_iter is a MagicMock.
         mock_process_iter.return_value ALSO is a MagicMock.
         '''
-        self.assertTrue(self.bw.is_browser_active())
-        self.assertTrue(self.bw.browser_is_active)
+        self.assertTrue(BrowserFinder.is_browser_active("chrome.exe"))
 
-    @patch("src.browser_finder.psutil.process_iter")
+    @patch("src.utils.browser_finder.psutil.process_iter")
     def test_is_browser_active_when_process_does_not_exist(self, mock_process_iter):
         mock_process = MagicMock()
         mock_process.info = {"name" : "undesiredBrowser.exe"}
         mock_process_iter.return_value = [mock_process]
 
-        self.assertFalse(self.bw.is_browser_active())
-        self.assertFalse(self.bw.browser_is_active)
+        self.assertFalse(BrowserFinder.is_browser_active("chrome.exe"))
 
-    @patch("src.browser_finder.psutil.process_iter")
+    @patch("src.utils.browser_finder.psutil.process_iter")
     def test_is_browser_active_when_no_process(self, mock_process_iter):
         mock_process_iter.return_value = []
+        self.assertFalse(BrowserFinder.is_browser_active("chrome.exe"))
 
-        self.assertFalse(self.bw.is_browser_active())
-        self.assertFalse(self.bw.browser_is_active)
-
-    @patch("src.browser_finder.psutil.process_iter")
+    @patch("src.utils.browser_finder.psutil.process_iter")
     def test_is_browser_active_when_process_is_none(self, mock_process_iter):
         mock_process_iter.return_value = []
+        self.assertFalse(BrowserFinder.is_browser_active("chrome.exe"))
 
-        self.assertFalse(self.bw.is_browser_active())
-        self.assertFalse(self.bw.browser_is_active)
+    @patch("src.utils.browser_finder.psutil.process_iter")
+    def test_active_browsers(self, mock_process_iter):
+        mock_process = MagicMock()
+        mock_process.info = {"name":"chrome.exe"}
+        mock_process_iter.return_value = [mock_process]
+
+        self.assertDictEqual(BrowserFinder.active_browsers(), {"chrome.exe":"Chrome"})
