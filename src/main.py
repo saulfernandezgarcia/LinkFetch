@@ -1,14 +1,16 @@
 from src.utils.browser_finder import BrowserFinder
+from src.utils.window_manager import WindowManager
 
 import pygetwindow as gw
 
-def main():
+def main_menu():
 
     print(BrowserFinder.active_browsers())
 
-    browserWindowList = (gw.getWindowsWithTitle("Chrome")
-                         + gw.getWindowsWithTitle("Firefox")
-                         + gw.getWindowsWithTitle("Edge"))
+    browserWindowList = []
+    for browserName in BrowserFinder.browser_dict.values():
+        browserWindowList += gw.getWindowsWithTitle(browserName)
+
     browserWindowDict = dict(zip(range(len(browserWindowList)), browserWindowList))
 
     while True:
@@ -25,14 +27,22 @@ def main():
             choiceId = int(input("Enter your browser choice: "))
 
             if (choiceId in browserWindowDict or choiceId == len(browserWindowDict)):
-                #ObtainTabs(browserWindowDict[choiceId])
-                pass
+                WindowManager.obtain_tabs(browserWindowDict[choiceId])
             else:
                 raise ValueError("Please introduce a number from the selection")
-
-
+        else:
+            print("No active browser windows were detected.")
         break
 
-if __name__ == "__main__":
-    main()
 
+
+if __name__ == "__main__":
+    main_menu()
+
+'''
+pyautogui
+pyperclip
+psutil
+pygetwindow
+Consider: selenium
+'''
