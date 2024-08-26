@@ -23,7 +23,6 @@ def create_timestamped_file(content_list):
                 output.write(str(item))
 
     return filepath
-# Add gitignore
 
 def main_menu():
 
