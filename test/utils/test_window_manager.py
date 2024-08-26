@@ -1,8 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
-import pyautogui
-
 from src.utils.window_manager import WindowManager
 
 class TestWindowManager(TestCase):

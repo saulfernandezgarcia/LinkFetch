@@ -24,8 +24,6 @@ class WindowManager:
             url_list.append(new_url)
             WindowManager.next_tab()
 
-        print(url_list)
-
         return url_list
 
     @staticmethod
@@ -52,8 +50,8 @@ class WindowManager:
 
     @staticmethod
     def next_window():
+        # Some advice: don't :D
         pg.hotkey("alt", "tab")
-        #GOOD LORD FIX THIS, MAKE IT A REQUIREMENT TO HAVE THE TAB AS NEXT IMMEDIATE TAB
 
     @staticmethod
     def next_tab():
