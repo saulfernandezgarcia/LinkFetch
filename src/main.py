@@ -1,5 +1,5 @@
-from src.utils.browser_finder import BrowserFinder
-from src.utils.window_manager import WindowManager
+from utils.browser_finder import BrowserFinder
+from utils.window_manager import WindowManager
 import os
 import pygetwindow as gw
 import datetime
