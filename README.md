@@ -7,6 +7,15 @@ Yes, you heard that right! **LinkFetch!** Have you ever been faced by the need o
 - you realize that the many links you opened on your incognito/regular window are actually of your interest and that you would like to keep them.
 - you want to save a copy of some links, but don't want to get into your very-neatly organized bookmarks (you have little time!)
 
+## How to run it?
+
+Easy peasy.
+
+1) Download the project "LinkFetch".
+2) Place it in the location of your choosing.
+3) On Windows, open the command prompt (search for "cmd" on windows search), and navigate to the folder of the project. There, call it with ```python -m src.main```
+4) Enjoy!
+
 ## How does it work?
 
 First, the script will check for currently opened browsers. As of now, it can detect Google Chrome, Mozilla Firefox, and Microsoft Edge. After this, you will be prompted with a numbered list.
